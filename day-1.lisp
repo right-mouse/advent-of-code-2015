@@ -1,10 +1,19 @@
 (defpackage aoc-day-1
   (:use :cl)
-  (:export :part-1 :part-2))
+  (:export :answers))
 (in-package :aoc-day-1)
 
-(defun part-1 ()
-  0)
-
-(defun part-2 ()
-  0)
+(defun answers (input-file)
+  (let ((input (uiop:read-file-string input-file))
+        (pos 0)
+        (cnt 0)
+        enter-basement)
+    (map 'string (lambda (c)
+                   (when (null enter-basement) (incf pos))
+                   (cond
+                    ((char= c #\() (incf cnt))
+                    ((char= c #\)) (decf cnt)))
+                   (when (and (null enter-basement) (< cnt 0)) (setq enter-basement pos))
+                   c)
+      input)
+    (cons cnt enter-basement)))
