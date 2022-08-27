@@ -8,14 +8,11 @@
 
 (defun main (day)
   (let ((input (format nil "inputs/day-~A.txt" day)) results)
-    (cond
-     ((= day 1)
-       (setq results (aoc-day-1:answers input)))
-     ((= day 2)
-       (setq results (aoc-day-2:answers input)))
-     ((= day 3)
-       (setq results (aoc-day-3:answers input)))
-     (t
-       (error "~A is not a valid day" day)))
+    (setq results
+        (cond
+         ((= day 1) (aoc-day-1:answers input))
+         ((= day 2) (aoc-day-2:answers input))
+         ((= day 3) (aoc-day-3:answers input))
+         (t (error "~A is not a valid day" day))))
     (format t "Part 1: ~A~%" (car results))
     (format t "Part 2: ~A~%" (cdr results))))
