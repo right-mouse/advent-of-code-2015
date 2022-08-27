@@ -7,18 +7,15 @@
   (let ((input (mapcar
                    (lambda (s) (sort (mapcar 'parse-integer (uiop:split-string s :separator "x")) '<))
                    (uiop:read-file-lines input-file)))
-        lengths widths heights surface-area ribbon-length)
-    (setq lengths (mapcar 'car input))
-    (setq widths (mapcar 'cadr input))
-    (setq heights (mapcar 'caddr input))
+        surface-area ribbon-length)
     (setq surface-area
         (apply '+
-          (mapcar (lambda (x y z)
-                    (let ((a1 (* x y))
-                          (a2 (* y z))
-                          (a3 (* x z)))
-                      (+ (* 2 a1) (* 2 a2) (* 2 a3) (min a1 a2 a3))))
-              lengths widths heights)))
+          (mapcar (lambda (n)
+                    (let ((x (car n))
+                          (y (cadr n))
+                          (z (caddr n)))
+                      (+ (* 3 x y) (* 2 y z) (* 2 x z))))
+              input)))
     (setq ribbon-length
         (apply '+
           (mapcar (lambda (n)
