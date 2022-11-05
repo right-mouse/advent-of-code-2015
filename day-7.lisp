@@ -24,13 +24,13 @@
         argc)
     (setq argc (length wire))
     (logand
-      65535
+      #xFFFF
       (cond
        ((= 1 argc) (eval-arg circuit wires (first wire)))
        ((= 2 argc)
          (progn (unless (equal "NOT" (first wire))
                   (error "invalid wire: ~A" wire))
-                (logxor (eval-arg circuit wires (second wire)) 65535)))
+                (logxor (eval-arg circuit wires (second wire)) #xFFFF)))
        ((= 3 argc)
          (let ((gate (second wire))
                (lhs (eval-arg circuit wires (first wire)))
