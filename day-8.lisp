@@ -1,0 +1,40 @@
+(defpackage aoc-day-8
+  (:use :cl)
+  (:export :answers))
+(in-package :aoc-day-8)
+
+(defun calculate-str-len (s)
+  (let ((code-len (length s))
+        (memory-len 0)
+        (encoded-len 2)
+        (i 0))
+    (loop
+     (let ((c (char s i)))
+       (cond
+        ((char= c #\\)
+          (progn
+           (incf i)
+           (setq c (char s i))
+           (when (char= c #\x) (incf i 2) (incf encoded-len 1))
+           (incf memory-len)
+           (incf encoded-len 4)))
+        ((char= c #\")
+          (incf encoded-len 2))
+        (t (progn
+            (incf memory-len)
+            (incf encoded-len)))))
+     (incf i)
+     (when (>= i code-len) (return)))
+    (list code-len memory-len encoded-len)))
+
+(defun answers (input-file)
+  (let ((input (uiop:read-file-lines input-file))
+        (code-len 0)
+        (memory-len 0)
+        (encoded-len 0))
+    (dolist (line input)
+      (let ((len (calculate-str-len line)))
+        (incf code-len (first len))
+        (incf memory-len (second len))
+        (incf encoded-len (third len))))
+    (cons (- code-len memory-len) (- encoded-len code-len))))
