@@ -5,6 +5,7 @@
 (load "day-5.lisp")
 (load "day-6.lisp")
 (load "day-7.lisp")
+(load "day-8.lisp")
 
 (defpackage aoc
   (:use :cl))
@@ -21,6 +22,7 @@
          ((= day 5) (aoc-day-5:answers input))
          ((= day 6) (aoc-day-6:answers input))
          ((= day 7) (aoc-day-7:answers input))
+         ((= day 8) (aoc-day-8:answers input))
          (t (error "~A is not a valid day" day))))
     (format t "Part 1: ~A~%" (car results))
     (format t "Part 2: ~A~%" (cdr results))))
